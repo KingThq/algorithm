@@ -1,3 +1,5 @@
+const utils = require('./utils');
+
 // 声明链表结构
 class ListNode {
   constructor(val) {
@@ -14,28 +16,9 @@ class List {
    * @param {any[]} valArr 
    */
   constructor(valArr) {
-    this.root = this.createList(valArr, valArr.length, 0);
-    // this.listArr = this.listToArray(this.reverse());
-    this.listArr = this.listToArray(this.recursiveReverse(null, this.root));
-  }
-
-  /**
-   * 将链表数组形式转换为链表形式
-   * @param {any[]} arr 
-   * @param {number} len 
-   * @param {number} i 
-   */
-  createList(arr, len, i) {
-    if (i < len) {
-      const node = {};
-
-      node.val = arr[i];
-      node.next = this.createList(arr, len, i + 1);
-
-      return node;
-    }
-
-    return null;
+    this.root = utils.createList(valArr, valArr.length, 0);
+    // this.listArr = utils.listToArray(this.reverse());
+    this.listArr = utils.listToArray(this.recursiveReverse(null, this.root));
   }
 
   /**
@@ -76,28 +59,10 @@ class List {
 
     return pre;
   }
-
-  /**
-   * 将链表转换为数组形式
-   * @param {ListNode} list 
-   */
-  listToArray(list) {
-    if (!list) return null;
-
-    const initArr = [list.val];
-
-    if (list.next) {
-      const arr = this.listToArray(list.next)
-
-      return initArr.concat(arr);
-    }
-
-    return initArr;
-  }
 }
 
 // 初始化链表
-const listArray = [1, 2, 3, 4, 5];
+const listArray = [1, 2, 3, 4, 5, null];
 const list = new List(listArray);
 
 console.log(list.listArr)
