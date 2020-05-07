@@ -26,15 +26,45 @@ class List {
    */
   constructor(valArr, m, n) {
     this.root = utils.createList(valArr, valArr.length, 0);
-    this.listArr = utils.listToArray(this.reverse(m, n));
+    this.listArr = utils.listToArray(this.reverseBetween(m, n));
     // this.listArr = utils.listToArray(this.recursiveReverse(null, this.root));
   }
 
-  reverse(m, n) {
+  reverseBetween(m, n) {
     const head = this.root;
     if (!head) return null;
 
-    
+    let dummy = new ListNode(0);
+    dummy.next = head;
+
+    let tmpHead = dummy;
+
+    // 找到第m-1个链表节点
+    for (let i = 0; i < m - 1; i ++) {
+      tmpHead = tmpHead.next;
+    }
+
+    let prev = null;
+    let cur = tmpHead.next;
+
+    for (let i = 0; i <= n - m; i ++) {
+      let next = cur.next;
+      cur.next = prev;
+      prev = cur;
+      cur = next;
+    }
+
+    // 将反转部分链表和原链表拼接
+    tmpHead.next.next = cur;
+    tmpHead.next = prev;
+
+    return dummy.next;
   }
 
 }
+
+// 初始化链表
+const listArray = [1, 2, 3, 4, 5, null];
+const list = new List(listArray, 2, 4);
+
+console.log(list.listArr)
